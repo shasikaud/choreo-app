@@ -39,6 +39,7 @@ export default function App() {
     } else {
       console.log("User is not signed in");
     }
+    //setSignedIn(true);
     setIsAuthLoading(false);
   }, []);
 

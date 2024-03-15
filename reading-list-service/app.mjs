@@ -1,10 +1,24 @@
 import express from "express";
 import cache from "./cache.mjs";
+import usersCache from "./usersCache.mjs";
 import { v4 as uuidv4 } from "uuid";
+import dotenv from "dotenv";
+import cors from "cors";
+import { use } from "chai";
+
+dotenv.config();
+const ENV = process.env.NODE_ENV || "prd";
+
+const corsOptions ={
+  origin:'*', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200,
+}
 
 const app = express();
+app.use(cors(corsOptions))
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+if (ENV === 'dev') app.use(express.urlencoded({ extended: true }));
 
 // add a book - request body should contain a title, status and an author
 app.post("/reading-list/books", (req, res) => {
